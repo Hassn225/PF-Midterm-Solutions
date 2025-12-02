@@ -1,0 +1,37 @@
+Question #02: Define any two from the following. Provide examples where useful.
+
+1) Header files
+Definition:
+Header files are files included at the top of a source file that provide declarations (functions, classes, macros, constants) so the compiler knows how to use library features.
+
+Example:
+#include <iostream>
+This header declares std::cout and std::cin used for input/output in C++.
+
+Another example:
+#include <cmath>
+Provides declarations for math functions like sqrt(), sin(), cos().
+
+2) Source code
+Definition:
+Source code is the human-readable program text written by a programmer (usually in files with extensions like .cpp, .c, .py). It is the code that gets compiled or interpreted to run a program.
+
+Example:
+A file `Q3.cpp` containing:
+#include <iostream>
+int main() { std::cout << "Hello"; return 0; }
+
+3) Comments
+Definition:
+Comments are non-executable notes in source code used to explain or document the code for humans. The compiler ignores them.
+
+Types / Examples in C++:
+- Single-line comment:
+// This is a single-line comment
+
+- Multi-line comment:
+/* This is a
+   multi-line comment */
+
+Good practice:
+Use comments to explain *why* something is done (not *what* every line does when it's obvious). Keep comments concise and meaningful.
