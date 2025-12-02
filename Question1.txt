@@ -1,0 +1,123 @@
+Question #01: Find the errors in the following codes. If no error, then write output.
+
+(a)
+Original snippet:
+#include <iostream>
+using namespace std;
+int main(){
+    int I, J;
+    for (I = 1; I > 7; I++)
+        cout << I;
+    cout << "End of Program";
+    return 7;
+}
+
+Analysis / Errors:
+1. Logic error in loop condition: `I > 7` is incorrect if the intention is to count from 1 up to 6. Because I starts at 1, `I > 7` is false immediately and the loop never executes.
+2. `return 7;` is not a compile error but non-standard for indicating successful termination. Conventionally `return 0;` is used.
+3. No syntax errors otherwise.
+
+Output if code is run as-is:
+Because loop body never runs, output is:
+End of Program
+
+Corrected (intent: print 1..6 then End of Program):
+for (I = 1; I < 7; I++)
+    cout << I << " ";
+cout << "End of Program";
+(return 0;)
+
+(b)
+Original snippet:
+#include <iostream>
+using namespace std;
+int main(){
+    int num1 = 5, num2 = 10;
+    if (num1 < num2)
+        cout << "num1 is smallest";
+        num1 = num2;
+    else
+        cout << "num2 is smallest";
+    return 0;
+}
+
+Analysis / Errors:
+1. Missing braces `{ ... }` for the `if` block. Because of that, the `if` controls only the first statement `cout << ...;`.
+2. The line `num1 = num2;` appears between the `if` and the `else`. This causes a syntax error at compile time: the `else` no longer matches the `if` (C++ will give "else without a previous if" or similar).
+3. Likely intended behavior is to perform both the `cout` and assignment inside the if block or to have only the cout inside if and not the assignment — intent is unclear.
+
+Fix (one possible correct version):
+if (num1 < num2) {
+    cout << "num1 is smallest";
+    num1 = num2;   // if this assignment is intended
+} else {
+    cout << "num2 is smallest";
+}
+
+If corrected this way, output (with initial values 5 and 10):
+num1 is smallest
+
+(c)
+Original snippet:
+#include <iostream>
+using namespace std;
+int main(){
+    int a = 0, b = 1;
+    a = b++;         // post-increment
+    cout << a << b;
+    b = ++a;         // pre-increment
+    cout << a << b;
+    return 0;
+}
+
+Analysis / Errors:
+1. No syntax errors.
+2. This uses pre- and post-increment operators; compute step-by-step:
+
+Step 1: a=0, b=1
+a = b++;   // a gets old b (1), then b becomes 2
+Now: a = 1, b = 2
+cout << a << b;  // prints "12"
+
+Step 2:
+b = ++a;   // a is pre-incremented to 2, then assigned to b
+Now: a = 2, b = 2
+cout << a << b;  // prints "22"
+
+Final output (concatenated with no spaces): 
+1222
+
+(d)
+Original snippet:
+#include <iostream>
+using namespace std;
+int main(){
+    cout << "enter values";
+    int a, b, res;
+    cin >> a; cin >> b;
+    a = 20; b = 10;
+    a + b = res;
+    cout << "res = " << res;
+    return 0;
+}
+
+Analysis / Errors:
+1. `a + b = res;` is invalid. Assignment's left side must be an l-value variable. The correct assignment to store the sum is `res = a + b;`.
+2. The code reads `a` and `b` from input but then immediately overwrites them with `a = 20; b = 10;`. That makes the `cin` useless. Either remove the overwriting assignments or remove the `cin` depending on the intended behavior.
+3. No other syntax errors (variables declared before use, etc).
+
+Corrected version (if intent is to read values and print their sum):
+int a, b, res;
+cout << "enter values";
+cin >> a >> b;
+res = a + b;
+cout << "res = " << res;
+
+Example (input 5 7) -> output:
+res = 12
+
+---
+
+Notes:
+- For (b) the compiler will complain because `else` has no matching `if` due to the intervening statement; this is an important syntax error to point out.
+- For (a) returning a non-zero value is not an error but not typical; most graders expect `return 0;` for successful termination.
